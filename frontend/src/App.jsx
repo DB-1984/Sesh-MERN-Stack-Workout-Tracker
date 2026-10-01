@@ -9,7 +9,7 @@ export default function App() {
     document.title = "Sesh";
   }, []);
   return (
-    <div className="relative min-h-[100dvh] bg-gradient-to-r from-slate-900 to-slate-700 overflow-hidden">
+    <div className="relative min-h-[100dvh] bg-transparent overflow-hidden">
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
         {/* Blob 1: Deep Charcoal - Top Right */}
         <div
