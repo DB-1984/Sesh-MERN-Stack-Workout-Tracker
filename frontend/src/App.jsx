@@ -11,22 +11,23 @@ export default function App() {
   return (
     <div className="relative min-h-[100dvh] bg-transparent overflow-hidden">
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        {/* Blob 1: Deep Charcoal - Top Right */}
         <div
           className="absolute -top-[10%] -right-[10%] w-[45rem] h-[45rem] 
-             -full bg-zinc-800/20 blur-[120px] 
-            animate-float dark:bg-zinc-900/40"
+             rounded-full bg-zinc-400/20 blur-[150px] 
+            animate-float dark:bg-amber-700/25"
         />
 
-        {/* Blob 2: Stealth Black/Gray - Bottom Left */}
         <div
           className="absolute -bottom-[15%] -left-[10%] w-[50rem] h-[50rem] 
-             -full bg-zinc-400/10 blur-[140px] 
-            animate-float-slow dark:bg-black/60"
+             rounded-full bg-gray-200/25 blur-[50px] 
+            animate-float-slow dark:bg-zinc-900/50"
         />
 
-        {/* Optional: Subtle Center Grain/Shadow to tie it together */}
-        <div className="absolute inset-0 bg-white/90/5 dark:bg-black/20" />
+        <div
+          className="absolute -bottom-[15%] -left-[10%] w-[50rem] h-[50rem] 
+             rounded-full bg-zinc-100/25 blur-[50px] 
+            animate-float-slow dark:bg-zinc-900/50"
+        />
       </div>
       <main className="relative z-10">
         <ScrollToTop />
