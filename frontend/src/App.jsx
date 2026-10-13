@@ -14,7 +14,7 @@ export default function App() {
         <div
           className="absolute -top-[10%] -right-[10%] w-[45rem] h-[45rem] 
              rounded-full bg-zinc-400/20 blur-[150px] 
-            animate-float dark:bg-amber-700/25"
+            animate-float dark:bg-black"
         />
 
         <div
