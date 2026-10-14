@@ -202,7 +202,7 @@ export default function ProfilePage() {
           <Button
             type="submit"
             disabled={isUpdating}
-            className="px-8 py-6  -md bg-black dark:bg-white/90 text-white dark:text-black font-bold text-sm shadow-xl hover:scale-[1.01] transition-all disabled:opacity-50"
+            className="px-4 bg-black dark:bg-white/90 text-white dark:text-black font-bold text-xs hover:scale-[1.01] transition-all disabled:opacity-50"
           >
             {isUpdating ? <Loader2 className="animate-spin" /> : "Update"}
           </Button>

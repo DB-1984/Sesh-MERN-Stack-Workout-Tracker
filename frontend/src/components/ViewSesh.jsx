@@ -25,6 +25,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
+const EMPTY_EXERCISE = {
+  exercise: "",
+  weight: "",
+  reps: "",
+  sets: "",
+  rest: "",
+  comments: "",
+};
+
 export default function ViewSesh() {
   const { id, exerciseId } = useParams();
   const navigate = useNavigate();
@@ -169,16 +178,7 @@ export default function ViewSesh() {
                 <ExerciseForm
                   title={null} // prevents double-title spacing in the form
                   submitLabel={exerciseId ? "Save Changes" : "Add to Sesh"}
-                  defaultValues={
-                    exerciseToEdit || {
-                      exercise: "",
-                      weight: "",
-                      reps: "",
-                      sets: "",
-                      rest: "",
-                      comments: "",
-                    }
-                  }
+                  defaultValues={exerciseToEdit || EMPTY_EXERCISE}
                   onCancel={
                     exerciseId ? () => navigate(`/users/sesh/${id}`) : null
                   }
