@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link, useNavigate, Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
-  useGetSeshesQuery,
+  useGetSeshByIdQuery,
   useAddExerciseMutation,
   useDeleteExerciseMutation,
   useRenameSeshMutation,
@@ -38,8 +38,11 @@ export default function ViewSesh() {
   const { id, exerciseId } = useParams();
   const navigate = useNavigate();
 
-  const { data: seshes = [], isLoading, isError } = useGetSeshesQuery();
-  const currentSesh = seshes.find((s) => s._id === id);
+const {
+  data: currentSesh,
+  isLoading,
+  isError,
+} = useGetSeshByIdQuery(id);
 
   const exerciseToEdit = currentSesh?.exercises?.find(
     (ex) => ex._id === exerciseId
