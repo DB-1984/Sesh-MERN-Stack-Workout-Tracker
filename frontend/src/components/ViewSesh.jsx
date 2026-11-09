@@ -148,7 +148,7 @@ const {
                           originalTitleRef.current = titleDraft;
                         }}
                         onBlur={handleRename}
-                        className="w-full bg-transparent border-none p-0 text-lg font-black tracking-tighter focus:outline-none focus:ring-0"
+                        className=""
                       />
 
                       <Button

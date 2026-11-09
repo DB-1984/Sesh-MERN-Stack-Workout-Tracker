@@ -11,23 +11,14 @@ export default function App() {
   return (
     <div className="relative min-h-[100dvh] bg-transparent overflow-hidden">
       <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div
-          className="absolute -top-[10%] -right-[10%] w-[45rem] h-[45rem] 
-             rounded-full bg-zinc-400/20 blur-[150px] 
-            animate-float dark:bg-black"
-        />
-
-        <div
-          className="absolute -bottom-[15%] -left-[10%] w-[50rem] h-[50rem] 
-             rounded-full bg-gray-200/25 blur-[50px] 
-            animate-float-slow dark:bg-zinc-900/50"
-        />
-
-        <div
-          className="absolute -bottom-[15%] -left-[10%] w-[50rem] h-[50rem] 
-             rounded-full bg-zinc-100/25 blur-[50px] 
-            animate-float-slow dark:bg-zinc-900/50"
-        />
+     {/* halftone dots, staggered grid */}
+<div
+  className="absolute inset-0 text-zinc-900/20 dark:text-white/20
+    [background-image:radial-gradient(circle,currentColor_1px,transparent_1.5px),radial-gradient(circle,currentColor_1px,transparent_1.5px)]
+    [background-size:16px_16px]
+    [background-position:0_0,8px_8px]
+    [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_75%)]"
+/>
       </div>
       <main className="relative z-10">
         <ScrollToTop />
