@@ -4,7 +4,8 @@ import cookieParser from "cookie-parser";
 import userRoutes from "./routes/userRoutes.js";
 import seshRoutes from "./routes/seshRoutes.js";
 import connectDB from "./utils/conn.js";
-import path from "path";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import cors from "cors";
 import passport from "passport";
 import { configurePassport } from "./config/passport.js";
@@ -15,6 +16,11 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Resolve relative to this file, regardless of the startup directory.
+const frontendPath = fileURLToPath(
+  new URL("../frontend/dist/", import.meta.url)
+);
 
 connectDB()
   .then(() => console.log("MongoDB connected"))
@@ -34,20 +40,23 @@ app.use(
 configurePassport();
 app.use(passport.initialize());
 
-// API Routes
+// API and authentication routes must precede the React fallback.
 app.use("/auth", authGoogleRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/seshes", seshRoutes);
 
-const __dirname = path.resolve("..");
-
 if (process.env.NODE_ENV === "production") {
-  const frontendPath = path.join(__dirname, "frontend", "dist");
-
   app.use(express.static(frontendPath));
 
-  app.get(/^(?!\/api|\/auth).*/, (req, res) => {
-    res.sendFile(path.join(frontendPath, "index.html"));
+  // Serve React for frontend routes, including /oauth-success.
+  // Leave /api and /auth requests to their respective routers.
+  app.get(/^(?!\/(?:api|auth)(?:\/|$)).*/, (req, res, next) => {
+    res.sendFile(path.join(frontendPath, "index.html"), (err) => {
+      if (err) {
+        console.error("Frontend fallback failed:", err);
+        next(err);
+      }
+    });
   });
 }
 
