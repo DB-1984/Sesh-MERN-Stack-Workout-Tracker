@@ -19,8 +19,8 @@ router.get(
   passport.authenticate("google", {
     session: false,
     failureRedirect:
-      process.env.NODE_ENV === "production"
-        ? "/users/login?oauth=failed"
+      process.env.NODE_ENV?.trim() === "production"
+        ? `${process.env.FRONTEND_URL?.replace(/\/$/, "")}/users/login?oauth=failed`
         : "http://localhost:5173/users/login?oauth=failed",
   }),
   (req, res) => {
@@ -28,12 +28,13 @@ router.get(
   
     const env = process.env.NODE_ENV?.trim();
     console.log(`REDIRECT DEBUG: env is "${env}"`);
+
+    const frontendUrl = process.env.FRONTEND_URL?.replace(/\/$/, "");
   
     // Use a more explicit check
     if (env === "production") {
       console.log("Redirecting to Production path");
-      return res.redirect("/oauth-success");
-    } else {
+      return res.redirect(`${frontendUrl}/oauth-success`);    } else {
       console.log("Redirecting to Local Dev path");
       return res.redirect("http://localhost:5173/oauth-success");
     }
