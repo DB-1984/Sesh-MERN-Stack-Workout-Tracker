@@ -9,7 +9,7 @@ const generateToken = (res, userId) => {
   res.cookie("jwt", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV !== "development",
-    sameSite: "strict", // <--- allows browser to send cookie on same-origin & localhost
+    sameSite: "lax", // lax for improved oauth compatibility
     maxAge: 30 * 24 * 60 * 60 * 1000,
   });
 };
