@@ -40,6 +40,16 @@ app.use(
 configurePassport();
 app.use(passport.initialize());
 
+// Never cache authenticated API or authentication responses.
+app.use(["/api", "/auth"], (req, res, next) => {
+  res.setHeader("Cache-Control", "private, no-store, max-age=0");
+  next();
+});
+
+app.use("/auth", authGoogleRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/seshes", seshRoutes);
+
 // API and authentication routes must precede the React fallback.
 app.use("/auth", authGoogleRoutes);
 app.use("/api/users", userRoutes);
