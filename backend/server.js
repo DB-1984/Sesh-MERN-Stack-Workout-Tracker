@@ -51,13 +51,17 @@ if (process.env.NODE_ENV === "production") {
   // Serve React for frontend routes, including /oauth-success.
   // Leave /api and /auth requests to their respective routers.
   app.get(/^(?!\/(?:api|auth)(?:\/|$)).*/, (req, res, next) => {
-    res.sendFile(path.join(frontendPath, "index.html"), (err) => {
+  res.sendFile(
+    path.join(frontendPath, "index.html"),
+    { dotfiles: "allow" },
+    (err) => {
       if (err) {
         console.error("Frontend fallback failed:", err);
         next(err);
       }
-    });
-  });
+    }
+  );
+});
 }
 
 app.use(errorHandler);
