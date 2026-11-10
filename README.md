@@ -177,39 +177,25 @@ Navigate into the project:
 
 ```bash
 cd Sesh-MERN-Stack-Workout-Tracker
-```
-
-### Backend Setup
-
-Navigate into the backend directory:
-
-```bash
-cd backend
 npm install
+npm --prefix backend install
+npm --prefix frontend install
 ```
 
-Configure the required environment variables for MongoDB, JWT authentication and any external integrations.
-
-Start the backend using the development script defined in its `package.json`.
-
-### Frontend Setup
-
-In a separate terminal, navigate into the frontend directory:
-
-```bash
-cd frontend
-npm install
-```
-
-Configure the frontend environment variables required to communicate with the backend.
-
-Start the Vite development server:
+Configure the required environment variables for MongoDB, JWT authentication, frontend API connectivity and any external integrations. Start both applications from the repository root:
 
 ```bash
 npm run dev
 ```
 
-Open the local URL displayed by Vite.
+This runs the backend and frontend together. The terminal output labels each process; if one exits with an error, the other is stopped as well. Open the local URL displayed by Vite.
+
+To run only one application, use the relevant command from the repository root:
+
+```bash
+npm --prefix backend run dev
+npm --prefix frontend run dev
+```
 
 *Google OAuth, transactional email and other external services may require additional configuration for local development.*
 

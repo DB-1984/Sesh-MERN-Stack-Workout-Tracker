@@ -311,7 +311,7 @@ const {
                     <div className="py-24 text-center">
                       <p className="text-sm font-bold">No exercises logged</p>
                       <p className="mt-1 text-sm text-muted-foreground">
-                        Add your first exercise on the left.
+                        Add your first exercise
                       </p>
                     </div>
                   )}
