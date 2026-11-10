@@ -10,7 +10,6 @@ import {
   Scale,
   Ruler,
   Target,
-  ChevronLeft,
   Settings2,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -22,11 +21,23 @@ import {
 } from "@/slices/userApiSlice";
 import { setUserInfo } from "../slices/userSlice";
 
+const sectionHeadingClass =
+  "border-b border-zinc-100 pb-3 text-lg font-semibold tracking-tight text-zinc-900 dark:border-zinc-900 dark:text-zinc-100";
+
+const labelClass =
+  "flex items-center gap-2 text-sm font-medium tracking-normal text-zinc-700 dark:text-zinc-300";
+
+const fieldClass =
+  "h-12 w-full rounded-md border-none bg-zinc-50 px-3 py-2 text-base md:text-base font-normal tracking-normal text-zinc-900 placeholder:text-zinc-400 placeholder:font-normal shadow-none focus-visible:ring-2 focus-visible:ring-black dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus-visible:ring-white";
+
+const iconClass = "h-3.5 w-3.5 text-zinc-500";
+
 export default function ProfilePage() {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
-  const { data: profileData, isLoading, isError } = useGetProfileQuery();
-  const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
+  const { data: profileData, isLoading } = useGetProfileQuery();
+  const [updateProfile, { isLoading: isUpdating }] =
+    useUpdateProfileMutation();
 
   const {
     register,
@@ -47,6 +58,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     const source = profileData || userInfo;
+
     if (source) {
       reset({
         name: source.name || "",
@@ -71,112 +83,136 @@ export default function ProfilePage() {
     }
   };
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-zinc-500">
-        <Loader2 className="h-8 w-8 animate-spin mb-4" />
-        <span className="font-black uppercase tracking-widest text-xs">
-          Syncing Profile
-        </span>
+        <Loader2 className="mb-3 h-6 w-6 animate-spin" />
+        <span className="text-sm font-medium">Syncing profile…</span>
       </div>
     );
+  }
 
   return (
     <>
-      {/* Header Area */}
-      <div className="flex items-center justify-between mb-12">
-        <div className="flex items-center gap-3">
-          <Settings2 className="h-6 w-6" />
-          <h2 className="text-2xl font-semibold tracking-tight">Profile</h2>
-        </div>
+      <div className="mb-10 flex items-center gap-3">
+        <Settings2 className="h-5 w-5 text-zinc-500" />
+        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+          Profile
+        </h2>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex-1 space-y-10">
-        {/* Account Section */}
-        <section className="space-y-6">
-          <p className="text-lg font-semibold tracking-tight border-b border-zinc-100 dark:border-zinc-900 pb-2">
-            Account
-          </p>
+        {/* Account */}
+        <section className="space-y-5">
+          <h3 className={sectionHeadingClass}>Account</h3>
 
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div className="grid gap-2">
-              <Label className="text-sm tracking-tighter font-bold text-zinc-800 flex items-center gap-1">
-                <User className="h-3 w-3" /> Full Name
+              <Label htmlFor="name" className={labelClass}>
+                <User className={iconClass} />
+                Full Name
               </Label>
+
               <Input
+                id="name"
                 {...register("name", { required: "Name is required" })}
-                className="bg-zinc-50 dark:bg-zinc-900 border-none font-bold text-lg h-12 focus-visible:ring-black dark:focus-visible:ring-white"
+                className={fieldClass}
+                aria-invalid={Boolean(errors.name)}
+                aria-describedby={errors.name ? "name-error" : undefined}
               />
+
+              {errors.name && (
+                <p id="name-error" className="text-sm text-red-500">
+                  {errors.name.message}
+                </p>
+              )}
             </div>
 
             <div className="grid gap-2">
-              <Label className="text-sm tracking-tighter font-bold text-zinc-800 flex items-center gap-1">
-                <Mail className="h-3 w-3" /> Email Address
+              <Label htmlFor="email" className={labelClass}>
+                <Mail className={iconClass} />
+                Email Address
               </Label>
+
               <Input
+                id="email"
                 disabled
                 {...register("email")}
-                className="bg-zinc-100/50 dark:bg-zinc-900/50 border-none font-bold text-lg h-12 opacity-60"
+                className={`${fieldClass} disabled:opacity-60`}
               />
             </div>
 
             <div className="grid gap-2">
-              <Label className="text-sm tracking-tighter font-bold text-zinc-800 flex items-center gap-1">
-                <Lock className="h-3 w-3" /> Password
+              <Label htmlFor="password" className={labelClass}>
+                <Lock className={iconClass} />
+                Password
               </Label>
+
               <Input
+                id="password"
                 type="password"
+                autoComplete="new-password"
                 placeholder="••••••••"
                 {...register("password")}
-                className="bg-zinc-50 dark:bg-zinc-900 border-none font-bold text-lg h-12 focus-visible:ring-black"
+                className={fieldClass}
               />
             </div>
           </div>
         </section>
 
-        {/* Biometrics Section */}
-        <section className="space-y-6">
-          <p className="text-lg font-semibold tracking-tight border-b border-zinc-100 dark:border-zinc-900 pb-2">
-            Biometrics
-          </p>
+        {/* Biometrics */}
+        <section className="space-y-5">
+          <h3 className={sectionHeadingClass}>Biometrics</h3>
 
           <div className="grid grid-cols-2 gap-6">
             <div className="grid gap-2">
-              <Label className="text-[10px] font-black text-zinc-500 uppercase flex items-center gap-1">
-                <Scale className="h-3 w-3" /> Weight (kg)
+              <Label htmlFor="weight" className={labelClass}>
+                <Scale className={iconClass} />
+                Weight (kg)
               </Label>
+
               <Input
+                id="weight"
                 type="number"
                 {...register("weight", {
                   setValueAs: (v) => (v === "" ? undefined : parseFloat(v)),
                 })}
-                className="bg-zinc-50 dark:bg-zinc-900 border-none font-bold text-lg h-12"
+                className={fieldClass}
               />
             </div>
+
             <div className="grid gap-2">
-              <Label className="text-[10px] font-black text-zinc-500 uppercase flex items-center gap-1">
-                <Ruler className="h-3 w-3" /> Height (cm)
+              <Label htmlFor="height" className={labelClass}>
+                <Ruler className={iconClass} />
+                Height (cm)
               </Label>
+
               <Input
+                id="height"
                 type="number"
                 {...register("height", {
                   setValueAs: (v) => (v === "" ? undefined : parseFloat(v)),
                 })}
-                className="bg-zinc-50 dark:bg-zinc-900 border-none font-bold text-lg h-12"
+                className={fieldClass}
               />
             </div>
           </div>
         </section>
 
-        {/* Goal Section */}
-        <section className="space-y-6">
+        {/* Goals */}
+        <section className="space-y-5">
+          <h3 className={sectionHeadingClass}>Goals</h3>
+
           <div className="grid gap-2">
-            <Label className="text-sm font-base text-zinc-900 flex items-center gap-1">
-              <Target className="h-3 w-3" /> Current Goal
+            <Label htmlFor="goal" className={labelClass}>
+              <Target className={iconClass} />
+              Current Goal
             </Label>
+
             <select
+              id="goal"
               {...register("goal")}
-              className="flex h-12 w-full  -md bg-zinc-50 dark:bg-zinc-900 px-3 py-1 font-bold text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white disabled:cursor-not-allowed disabled:opacity-50 appearance-none"
+              className={`${fieldClass} focus-visible:outline-none`}
             >
               <option value="Strength">Strength</option>
               <option value="Hypertrophy">Hypertrophy</option>
@@ -186,25 +222,34 @@ export default function ProfilePage() {
           </div>
 
           <div className="grid gap-2">
-            <Label className="text-sm font-base text-zinc-900 flex items-center gap-1">
-              <Target className="h-3 w-3" /> Specific Targets
+            <Label htmlFor="targets" className={labelClass}>
+              <Target className={iconClass} />
+              Specific Targets
             </Label>
+
             <textarea
+              id="targets"
               {...register("targets")}
-              placeholder="e.g. 100kg Bench, 5km under 20 mins..."
-              className="flex min-h-[100px] w-full  -md bg-zinc-50 dark:bg-zinc-900 px-3 py-3 font-medium text-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white border-none"
+              placeholder="e.g. 100kg bench, 5km under 20 mins..."
+              className={`${fieldClass} h-auto min-h-[100px] resize-y py-3 leading-relaxed focus-visible:outline-none`}
             />
           </div>
         </section>
 
-        {/* Submit Area */}
-        <div className="pt-8 w-full">
+        <div className="w-full pt-4">
           <Button
             type="submit"
             disabled={isUpdating}
-            className="px-4 bg-black dark:bg-white/90 text-white dark:text-black font-bold text-xs hover:scale-[1.01] transition-all disabled:opacity-50"
+            className="h-10 bg-black px-5 text-sm font-medium text-white transition-colors hover:bg-zinc-800 disabled:opacity-50 dark:bg-white/90 dark:text-black dark:hover:bg-white"
           >
-            {isUpdating ? <Loader2 className="animate-spin" /> : "Update"}
+            {isUpdating ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Updating…
+              </>
+            ) : (
+              "Update"
+            )}
           </Button>
         </div>
       </form>
