@@ -9,9 +9,7 @@ Rather than treating workouts as isolated sessions, the application provides a w
 
 The project explores full-stack JavaScript development, including React state management, REST API integration, database persistence, authentication and responsive interface design.
 
-**[Try the Live App](https://sesh-app.onrender.com/)** | **[Source Code](https://github.com/DB-1984/Sesh-MERN-Stack-Workout-Tracker)**
-
-*The application is hosted on Render and may take a minute to become available after a period of inactivity.*
+[![Watch the Sesh demonstration](https://img.youtube.com/vi/tcK6Q5m7Trk/hqdefault.jpg)](https://www.youtube.com/watch?v=tcK6Q5m7Trk)
 
 ---
 
