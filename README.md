@@ -1,21 +1,29 @@
-
 # Sesh — Workout Tracker
 
 **A full-stack workout tracking application built with React 19, Redux Toolkit, Node.js, Express 5 and MongoDB.**
 
 Sesh is a self-directed MERN stack project designed to help users record workouts and maintain a structured history of their training.
 
-Rather than treating workouts as isolated sessions, the application provides a way to organise and revisit previous activity, making it easier to follow progress over time.
+The application provides a way to organise and revisit previous activity, making it easier to follow progress over time.
 
 The project explores full-stack JavaScript development, including React state management, REST API integration, database persistence, authentication and responsive interface design.
 
-[![Watch the Sesh demonstration](https://img.youtube.com/vi/tcK6Q5m7Trk/hqdefault.jpg)](https://www.youtube.com/watch?v=tcK6Q5m7Trk)
+**[Try the Live App](https://sesh.davidbrandondev.com/)** | **[Source Code](https://github.com/DB-1984/sesh-app.onrender.com)**
+
+## Test Login
+
+Try the app using the shared demo account:
+
+- **Email:** test@email.com
+- **Password:** 1234
+
+*This is a shared account. Please avoid entering personal information.*
 
 ---
 
 ## Video Demonstration
 
-[![Watch the Sesh demonstration](https://img.youtube.com/vi/QuLKcg9rdjU/hqdefault.jpg)](https://www.youtube.com/watch?v=QuLKcg9rdjU)
+[![Watch the Sesh demonstration](https://img.youtube.com/vi/tcK6Q5m7Trk/hqdefault.jpg)](https://www.youtube.com/watch?v=tcK6Q5m7Trk)
 
 *Click the image to watch Sesh in action on YouTube.*
 
@@ -28,7 +36,7 @@ The project explores full-stack JavaScript development, including React state ma
 - **React 19** — Component-based user interface
 - **Vite** — Frontend development and build tooling
 - **React Router** — Client-side navigation
-- **Redux Toolkit** — Application state management
+- **Redux Toolkit / RTK Query** — Shared state, API requests and cached server data
 - **Tailwind CSS v4** — Responsive styling
 - **Radix UI** — Accessible interface primitives
 - **React Hook Form** — Form state management
@@ -61,7 +69,7 @@ Sesh allows users to record and maintain a history of their workouts.
 - Interfaces for managing training information
 - Date and calendar functionality for navigating sessions
 
-The aim is to make previous workouts easy to revisit rather than leaving training information scattered across individual notes or records.
+The aim is to make previous workouts easy to revisit and keep training information organised.
 
 ### User Authentication
 
@@ -73,15 +81,15 @@ Sesh supports both traditional account credentials and Google sign-in.
 - Password hashing using bcryptjs
 - Transactional email integration using Resend
 
-The backend handles authentication independently of the React frontend, providing experience with authentication across separate client and server applications.
+The Express backend handles authentication and account data, while the React frontend provides the account interfaces.
 
 ### React State Management
 
-Redux Toolkit manages application state, while React handles component-level interactions.
+Redux Toolkit manages shared application state, while RTK Query handles API requests and cached server data.
 
-This provides experience working with shared state across a multi-component application rather than relying entirely on local component state.
+Query hooks provide data and request states to components. Mutations and cache invalidation help keep displayed information current after changes.
 
-React Router handles navigation between application views.
+React handles component-level interactions, and React Router manages navigation between application views.
 
 ### Forms and User Interaction
 
@@ -99,37 +107,33 @@ The interface combines React Hook Form with reusable components based on Radix U
 
 ### MERN Architecture
 
-Sesh uses separate frontend and backend applications.
+Sesh separates its frontend and backend code.
 
 The frontend is built with React and Vite, while Node.js and Express provide the backend API and application logic.
 
 MongoDB stores the application's data, with Mongoose providing models and database operations.
 
-This separation provides practical experience with communication between a client-side application and a standalone backend.
+This separation keeps interface development and backend logic in their respective parts of the application.
 
-### Redux Toolkit
+### Redux Toolkit and RTK Query
 
-Redux Toolkit is used to manage shared application state.
+Redux Toolkit provides centralised state management for information shared across components.
 
-The project explores how centralised state management can help coordinate application data across different React components and views.
+RTK Query manages the API data lifecycle, including fetching, caching, loading states and updates following mutations.
 
-It also provides an opportunity to distinguish between state that belongs to an individual component and state that needs to be shared across the application.
+The project explores the distinction between local component state, shared client state and data retrieved from the backend.
 
 ### Authentication Across Client and Server
 
-Unlike applications where authentication is handled within a single full-stack framework, Sesh uses a separate Express backend.
-
 JWTs support authenticated access, while Passport provides Google OAuth integration.
 
-This required consideration of how authentication information is passed between the frontend and backend, alongside password verification and persistent account data.
+The implementation connects frontend account interactions with backend authentication, password verification and persistent user records.
 
 ### Database Persistence
 
 MongoDB provides persistent storage for application data.
 
-Mongoose is used to define data models and interact with the database from the Express backend.
-
-This separates database operations from the React interface and provides experience with a document-oriented database architecture.
+Mongoose defines data models and handles database operations from the Express backend, keeping database access separate from the React interface.
 
 ### Interface Development
 
@@ -144,7 +148,7 @@ React Hook Form manages form interactions, while date-fns and react-day-picker s
 The repository separates the application into two main directories:
 
 ```text
-Sesh-MERN-Stack-Workout-Tracker/
+sesh-app.onrender.com/
 ├── frontend/     # React and Vite application
 └── backend/      # Node.js and Express application
 ```
@@ -168,19 +172,21 @@ This separation keeps the user interface and backend application logic in their 
 Clone the repository:
 
 ```bash
-git clone https://github.com/DB-1984/Sesh-MERN-Stack-Workout-Tracker.git
+git clone https://github.com/DB-1984/sesh-app.onrender.com.git
 ```
 
-Navigate into the project:
+Navigate into the project and install dependencies:
 
 ```bash
-cd Sesh-MERN-Stack-Workout-Tracker
+cd sesh-app.onrender.com
 npm install
 npm --prefix backend install
 npm --prefix frontend install
 ```
 
-Configure the required environment variables for MongoDB, JWT authentication, frontend API connectivity and any external integrations. Start both applications from the repository root:
+Configure the required environment variables for MongoDB, JWT authentication, frontend API connectivity and any external integrations.
+
+Start both applications from the repository root:
 
 ```bash
 npm run dev
@@ -195,7 +201,7 @@ npm --prefix backend run dev
 npm --prefix frontend run dev
 ```
 
-*Google OAuth, transactional email and other external services may require additional configuration for local development.*
+*Google OAuth, transactional email and other external services require their corresponding credentials and configuration for local development.*
 
 ---
 
@@ -203,7 +209,7 @@ npm --prefix frontend run dev
 
 Sesh is a self-directed full-stack JavaScript project developed to extend my experience beyond commercial WordPress and PHP development.
 
-It provided an opportunity to build a React application with a separate Node.js and Express backend, implement authentication, work with MongoDB and manage application state using Redux Toolkit.
+It provided an opportunity to build a React application with a Node.js and Express backend, implement authentication, work with MongoDB and manage application state using Redux Toolkit and RTK Query.
 
 The project reflects my interest in building practical applications around real user workflows, with an emphasis on maintainable application structure and straightforward interaction design.
 
@@ -211,8 +217,8 @@ The project reflects my interest in building practical applications around real 
 
 ## Links
 
-- **Live Application:** https://sesh-app.onrender.com/
-- **Video Demonstration:** https://www.youtube.com/watch?v=QuLKcg9rdjU
-- **Source Code:** https://github.com/DB-1984/Sesh-MERN-Stack-Workout-Tracker
-- **Developer Portfolio:** https://david-brandon.onrender.com/
+- **Live Application:** https://sesh.davidbrandondev.com/
+- **Video Demonstration:** https://www.youtube.com/watch?v=tcK6Q5m7Trk
+- **Source Code:** https://github.com/DB-1984/sesh-app.onrender.com
+- **Developer Portfolio:** https://davidbrandondev.com/
 - **GitHub Profile:** https://github.com/DB-1984
